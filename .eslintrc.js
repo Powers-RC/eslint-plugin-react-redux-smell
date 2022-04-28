@@ -8,6 +8,7 @@ module.exports = {
     "plugin:node/recommended",
   ],
   env: {
+    browser: true,
     node: true,
   },
   overrides: [
