@@ -16,18 +16,4 @@ module.exports = {
       env: { mocha: true },
     },
   ],
-  configs: {
-    staterConfig: {
-      plugins: ["react-redux-smell"],
-      env: ["node"],
-      rules: {
-          "react-redux-smell/my-rule": "error"
-      },
-      overrides: [
-        {
-          files: ["**/reducers/**/*Reducer*.js"]
-        }
-      ]
-    }
-  }
 };
