@@ -11,20 +11,40 @@ const ruleTester = new RuleTester({ parserOptions });
 ruleTester.run('same-object-reference', rule, {
   valid: [
       {
-        code:  'let nestedState = { ...state.nestedState}',
+        code:  'let nestedState = { ...state.nestedStateProperty}',
         options: []
       }
   ],
-  invalid: [{
-    code:  'let nestedState = state.nestedState',
+  invalid: [
+    {
+      code:  'let nestedState = state.nestedStateProperty;\n' + 
+      'nestedState.nestedField = action.data;',
+      errors: [
+        {
+          message: 'This assingment directly mutates a state object.',
+          suggestions: [{
+            desc: 'Replace referenced variable with new object.',
+            output: 'let nestedState = { ...state.nestedStateProperty };\n' +
+            'nestedState.nestedField = action.data;'
+          }]
+        },
+      ],
+    },
+    {
+    code:  'let nestedState = state.nestedStateProperty;\n' +
+          'const actionData = action.data.info;\n' + 
+          'nestedState.nestedField = actionData;',
     errors: [
       {
-        message: 'This new variable references the same object.',
+        message: 'This assingment directly mutates a state object.',
         suggestions: [{
-          desc: 'Replaces state reference assingment with a spread operator.',
-          output: 'let nestedState = { ...state.nestedState }'
+          desc: 'Replace referenced variable with new object.',
+          output: 'let nestedState = { ...state.nestedStateProperty };\n' + 
+          'const actionData = action.data.info;\n' + 
+          'nestedState.nestedField = actionData;'
         }]
       },
     ],
-  }],
+    }
+  ],
 });
