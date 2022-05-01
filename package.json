@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-react-redux-smell",
-  "version": "0.1.3",
+  "version": "0.1.5",
   "description": "Identify redux anti-patterns",
   "keywords": [
     "eslint",
